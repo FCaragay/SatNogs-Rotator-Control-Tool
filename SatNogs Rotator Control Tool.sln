@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rotator Serial Interface", "Rotator Serial Interface\Rotator Serial Interface.csproj", "{98C297E7-967C-4870-B2A5-51783AECEAFF}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SatNogs Rotator Control Tool", "SatNogs Rotator Controller Installer\SatNogs Rotator Controller Installer.vdproj", "{FB51E458-FD67-4E97-BFEE-C0A8B49E66FF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{98C297E7-967C-4870-B2A5-51783AECEAFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98C297E7-967C-4870-B2A5-51783AECEAFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98C297E7-967C-4870-B2A5-51783AECEAFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98C297E7-967C-4870-B2A5-51783AECEAFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB51E458-FD67-4E97-BFEE-C0A8B49E66FF}.Debug|Any CPU.ActiveCfg = Debug
+		{FB51E458-FD67-4E97-BFEE-C0A8B49E66FF}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {87B29EC0-870A-49B4-A69A-A18E965CE515}
+	EndGlobalSection
+EndGlobal
