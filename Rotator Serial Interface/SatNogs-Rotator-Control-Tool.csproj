@@ -113,12 +113,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\animated-antenna-image-0007.gif" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\2021-10-22 18_51_04-Form1.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\satnogs_net.png" />
   </ItemGroup>
   <ItemGroup>
