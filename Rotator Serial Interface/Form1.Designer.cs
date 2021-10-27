@@ -65,8 +65,10 @@ namespace Rotator_Serial_Interface
             this.pbUser = new System.Windows.Forms.ProgressBar();
             this.txtUserNotif = new System.Windows.Forms.TextBox();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tooltipESTOP = new System.Windows.Forms.ToolTip(this.components);
+            this.btnCmdSend = new System.Windows.Forms.Button();
+            this.txtSendCmd = new System.Windows.Forms.TextBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.gbSSH.SuspendLayout();
             this.gbControls.SuspendLayout();
             this.gbCommand.SuspendLayout();
@@ -183,7 +185,9 @@ namespace Rotator_Serial_Interface
             // 
             // gbControls
             // 
+            this.gbControls.Controls.Add(this.btnCmdSend);
             this.gbControls.Controls.Add(this.btnSTOP);
+            this.gbControls.Controls.Add(this.txtSendCmd);
             this.gbControls.Controls.Add(this.gbCommand);
             this.gbControls.Controls.Add(this.btnGetPos);
             this.gbControls.Controls.Add(this.lstLog);
@@ -201,7 +205,7 @@ namespace Rotator_Serial_Interface
             this.gbControls.Enabled = false;
             this.gbControls.Location = new System.Drawing.Point(237, 12);
             this.gbControls.Name = "gbControls";
-            this.gbControls.Size = new System.Drawing.Size(508, 257);
+            this.gbControls.Size = new System.Drawing.Size(508, 289);
             this.gbControls.TabIndex = 10;
             this.gbControls.TabStop = false;
             this.gbControls.Text = "Controls";
@@ -311,21 +315,20 @@ namespace Rotator_Serial_Interface
             // lblELCurrentPos
             // 
             this.lblELCurrentPos.AutoSize = true;
-            this.lblELCurrentPos.Location = new System.Drawing.Point(403, 71);
+            this.lblELCurrentPos.Location = new System.Drawing.Point(431, 71);
             this.lblELCurrentPos.Name = "lblELCurrentPos";
-            this.lblELCurrentPos.Size = new System.Drawing.Size(93, 13);
+            this.lblELCurrentPos.Size = new System.Drawing.Size(39, 13);
             this.lblELCurrentPos.TabIndex = 8;
-            this.lblELCurrentPos.Text = "EL Active Position";
-            this.lblELCurrentPos.Click += new System.EventHandler(this.label1_Click);
+            this.lblELCurrentPos.Text = "EL Set";
             // 
             // lblAZCurrentPos
             // 
             this.lblAZCurrentPos.AutoSize = true;
-            this.lblAZCurrentPos.Location = new System.Drawing.Point(403, 20);
+            this.lblAZCurrentPos.Location = new System.Drawing.Point(430, 20);
             this.lblAZCurrentPos.Name = "lblAZCurrentPos";
-            this.lblAZCurrentPos.Size = new System.Drawing.Size(94, 13);
+            this.lblAZCurrentPos.Size = new System.Drawing.Size(40, 13);
             this.lblAZCurrentPos.TabIndex = 7;
-            this.lblAZCurrentPos.Text = "AZ Active Position";
+            this.lblAZCurrentPos.Text = "AZ Set";
             // 
             // txtELposition
             // 
@@ -393,14 +396,14 @@ namespace Rotator_Serial_Interface
             // 
             // pbUser
             // 
-            this.pbUser.Location = new System.Drawing.Point(237, 275);
+            this.pbUser.Location = new System.Drawing.Point(237, 307);
             this.pbUser.Name = "pbUser";
             this.pbUser.Size = new System.Drawing.Size(508, 10);
             this.pbUser.TabIndex = 12;
             // 
             // txtUserNotif
             // 
-            this.txtUserNotif.Location = new System.Drawing.Point(237, 292);
+            this.txtUserNotif.Location = new System.Drawing.Point(237, 324);
             this.txtUserNotif.Name = "txtUserNotif";
             this.txtUserNotif.Size = new System.Drawing.Size(508, 20);
             this.txtUserNotif.TabIndex = 13;
@@ -410,10 +413,27 @@ namespace Rotator_Serial_Interface
             this.notifyIcon1.Text = "notifyIcon1";
             this.notifyIcon1.Visible = true;
             // 
+            // btnCmdSend
+            // 
+            this.btnCmdSend.Location = new System.Drawing.Point(405, 260);
+            this.btnCmdSend.Name = "btnCmdSend";
+            this.btnCmdSend.Size = new System.Drawing.Size(92, 23);
+            this.btnCmdSend.TabIndex = 15;
+            this.btnCmdSend.Text = "Send Command";
+            this.btnCmdSend.UseVisualStyleBackColor = true;
+            this.btnCmdSend.Click += new System.EventHandler(this.btnCmdSend_Click);
+            // 
+            // txtSendCmd
+            // 
+            this.txtSendCmd.Location = new System.Drawing.Point(6, 263);
+            this.txtSendCmd.Name = "txtSendCmd";
+            this.txtSendCmd.Size = new System.Drawing.Size(393, 20);
+            this.txtSendCmd.TabIndex = 16;
+            // 
             // pictureBox1
             // 
-            this.pictureBox1.Image = global::Rotator_Serial_Interface.Properties.Resources.satnogs_net;
-            this.pictureBox1.Location = new System.Drawing.Point(12, 243);
+            this.pictureBox1.Image = global::SatNogs_Rotator_Control_Tool.Properties.Resources.satnogs_net;
+            this.pictureBox1.Location = new System.Drawing.Point(12, 253);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(200, 42);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -425,7 +445,7 @@ namespace Rotator_Serial_Interface
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(756, 326);
+            this.ClientSize = new System.Drawing.Size(756, 352);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.txtUserNotif);
             this.Controls.Add(this.pbUser);
@@ -433,11 +453,10 @@ namespace Rotator_Serial_Interface
             this.Controls.Add(this.gbSSH);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(772, 365);
+            this.MaximumSize = new System.Drawing.Size(772, 500);
             this.MinimumSize = new System.Drawing.Size(772, 365);
             this.Name = "frmMain";
             this.Text = "SatNogs Rotator Control Tool";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.gbSSH.ResumeLayout(false);
             this.gbSSH.PerformLayout();
             this.gbControls.ResumeLayout(false);
@@ -489,6 +508,8 @@ namespace Rotator_Serial_Interface
         private System.Windows.Forms.Button btnDisconnect;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolTip tooltipESTOP;
+        private System.Windows.Forms.Button btnCmdSend;
+        private System.Windows.Forms.TextBox txtSendCmd;
     }
 }
 

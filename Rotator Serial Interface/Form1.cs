@@ -15,34 +15,38 @@ namespace Rotator_Serial_Interface
            
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-            
-        }
-
         private void trkAZ_Scroll(object sender, EventArgs e)
         {
+            //Update Value for TrkBar
             lblAZtrkval.Text = trkAZ.Value.ToString("");
         }
 
         private void trkEL_Scroll(object sender, EventArgs e)
         {
+            //Update Value for TrkBar
             lblELtrkval.Text = trkEL.Value.ToString("");
         }
 
         private void btnSSHConnect_Click(object sender, EventArgs e)
         {
+            //define SSH parameters
             string IP = txtIP.Text;
             string User = txtUser.Text;
             string Pass = txtPass.Text;
+            
+            //Try connecting
             try
             {
                 
                 using (var sshclient = new SshClient(IP, User, Pass))
                 {
+                    //try connecting
                     sshclient.Connect();
                     lblConnectState.Text = "Connected";
                     txtUserNotif.Text = "Connected to " + IP;
+                    
+                    
+                    //Update UI with last known position
                     //send command for AZ getpos
                     string cmd = @"rotctl -m 204 -r /dev/ttyACM0 -s9600  w IP3";
                     string AZ = Connect(IP, User, Pass, cmd);
@@ -53,9 +57,9 @@ namespace Rotator_Serial_Interface
                     EL = EL.Replace("IP4,", "");
                     AZ = AZ.Replace("IP3,", "");
 
-                    //Write AZEL to console
-                    Console.WriteLine(AZ);
-                    Console.WriteLine(EL);
+                    //Write AZEL to console for debug
+                    //Console.WriteLine(AZ);
+                    //Console.WriteLine(EL);
 
                     //Add AZEL to log
                     lstLog.Items.Add("AZ " + AZ);
@@ -65,9 +69,10 @@ namespace Rotator_Serial_Interface
                     EL = EL.Remove(EL.LastIndexOf("."));
                     AZ = AZ.Remove(AZ.LastIndexOf("."));
 
-                    //console output
-                    Console.WriteLine(EL);
-                    Console.WriteLine(AZ);
+
+                    //Write AZEL to console for debug
+                    //Console.WriteLine(AZ);
+                    //Console.WriteLine(EL);
 
 
                     //set trackbar value
@@ -83,6 +88,7 @@ namespace Rotator_Serial_Interface
 
                 }
             }
+            //If connecting throws exception, post Not Connected & Unable to connect...
             catch
             {
                 lblConnectState.Text = "Not Connected";
@@ -94,13 +100,17 @@ namespace Rotator_Serial_Interface
 
         private void btnAZELConf_Click(object sender, EventArgs e)
         {
+            //set position
+
+            //Define SSH parameters
             string IP = txtIP.Text;
             string User = txtUser.Text;
             string Pass = txtPass.Text;
+            //Connect & execute command
             string cmd = "rotctl -m 204 -r /dev/ttyACM0 -s9600  P "+ trkAZ.Value.ToString("") + " " + trkEL.Value.ToString("");
             string lst = Connect(IP, User, Pass, cmd);
             
-
+            //update "Active Position"
             txtAZposition.Text = trkAZ.Value.ToString("");
             txtELposition.Text = trkEL.Value.ToString("");
             
@@ -108,6 +118,7 @@ namespace Rotator_Serial_Interface
 
         private void btnGetPos_Click(object sender, EventArgs e)
         {
+            //define SSH parameters
             string IP = txtIP.Text;
             string User = txtUser.Text;
             string Pass = txtPass.Text;
@@ -120,11 +131,11 @@ namespace Rotator_Serial_Interface
             //clean AZ EL strings
             EL = EL.Replace("IP4,", "");
             AZ = AZ.Replace("IP3,", "");
-            
-            //Write AZEL to console
-            Console.WriteLine(AZ);
-            Console.WriteLine(EL);
-            
+
+            //console output for debug
+            //Console.WriteLine(EL);
+            //Console.WriteLine(AZ);
+
             //Add AZEL to log
             lstLog.Items.Add("AZ "+AZ);
             lstLog.Items.Add("EL "+EL);
@@ -133,134 +144,21 @@ namespace Rotator_Serial_Interface
             EL = EL.Remove(EL.LastIndexOf("."));
             AZ = AZ.Remove(AZ.LastIndexOf("."));
 
-            //console output
-            Console.WriteLine(EL);
-            Console.WriteLine(AZ);
+            //console output for debug
+            //Console.WriteLine(EL);
+            //Console.WriteLine(AZ);
 
 
             //set trackbar value
             trkAZ.Value = int.Parse(AZ);
             trkEL.Value = int.Parse(EL);
 
-            //set trackbar value textbox and active position textbox
+            //set trackbar value textbox 
             lblELtrkval.Text = EL;
             lblAZtrkval.Text = AZ;
             
-            txtAZposition.Text = AZ;
-            txtELposition.Text = EL;
-
-        }
-
-        public string Connect(string IP, string User, string Pass, string cmd)
-        {
-            string out1 = ""; 
-
-            //Establish connection or post error
-            try
-            {
-                using (var sshclient = new SshClient(IP, User, Pass))
-                {
-                    //Connect to ssh client/update pb/update usernotif/execute command.
-                    
-                    pbUser.Value = 30;
-                    
-                    sshclient.Connect();
-                    
-                    pbUser.Value = 60;
-                    
-                    lblConnectState.Text = "Connected";
-                    Console.WriteLine("Connected to " + IP);
-                    
-                    pbUser.Value = 90;
-                    var cmd1 = sshclient.RunCommand(cmd);
-                    out1 = cmd1.Result;
-                    pbUser.Value = 100;
-                    txtUserNotif.Text = "Command Executed";
-                    gbControls.Enabled = true;
-                    
-                }
-            }
-            catch
-            {
-                //unable to connect procedure
-                pbUser.Value = 50;
-                Console.WriteLine("Connection ERROR 2");
-                lblConnectState.Text = "Not Connected";
-                pbUser.Value = 100;
-                pbUser.Value = 0;
-                gbControls.Enabled = false;
-                txtUserNotif.Text = "Connection Error" + IP;
-                
-            }
-            //return command output for parsing/data updating
-            return (out1);
-        }
-
-        public string statuscheck(string IP, string User, string Pass)
-        {
-
-            string cmd = "rotctl -m 204 -r /dev/ttyACM0 -s9600  w GS";
-            string status = Connect(IP, User, Pass, cmd);
-            if (status == "GS1")
-            {
-                
-            }
-            else if (status == "GS2")
-            {
-               
-            }
-            return (status);
-        }
             
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            /*
-            if(lblConnectStatus.Text == "Connected")
-            {
-                string IP = txtIP.Text;
-                string User = txtUser.Text;
-                string Pass = txtPass.Text;
-                string cmd = @"rotctl -m 204 -r /dev/ttyACM0 -s9600  w IP3";
-                string AZ = Connect(IP, User, Pass, cmd);
-                string cmd2 = @"rotctl -m 204 -r /dev/ttyACM0 -s9600  w IP4";
-                string EL = Connect(IP, User, Pass, cmd2);
-                EL = EL.Replace("IP4,", "");
-                AZ = AZ.Replace("IP3,", "");
-                Console.WriteLine(AZ);
-                Console.WriteLine(EL);
-
-
-
-                double AZd = double.Parse(AZ);
-                double ELd = double.Parse(EL);
-                EL = EL.Replace(".00", "");
-                AZ = AZ.Replace(".00", "");
-                Console.WriteLine(EL);
-                Console.WriteLine(AZ);
-
-
-                try
-                {
-
-
-                    int ELi = int.Parse(EL);
-                    int AZi = int.Parse(AZ);
-                    trkAZ.Value = AZi;
-                    trkEL.Value = ELi;
-                }
-                catch
-                {
-
-                }
-
-                lblELtrkval.Text = trkEL.Value.ToString("");
-                lblAZtrkval.Text = trkAZ.Value.ToString("");
-                txtAZposition.Text = AZ;
-                txtELposition.Text = EL;
-            }
-            */
-            
         }
 
         private void btnDisconnect_Click(object sender, EventArgs e)
@@ -308,7 +206,7 @@ namespace Rotator_Serial_Interface
                 txtUserNotif.Text = "Status: Parked";
                 lstLog.Items.Add("Status: Parked");
             }
-           string test = apiget(User);
+           
         }
 
         private void btnFMVer_Click(object sender, EventArgs e)
@@ -376,25 +274,70 @@ namespace Rotator_Serial_Interface
             gbControls.Enabled = true;
         }
 
-        public string apiget(string get)
+
+        //Connect method
+        public string Connect(string IP, string User, string Pass, string cmd)
         {
-            var client = new HttpClient();
-            var apiresult = client.GetStringAsync("https://api.n2yo.com/rest/v1/satellite/tle/25544&apiKey=RLD2F7-3M5J5L-UAKJVG-4SO7");
+            string out1 = "";
 
+            //Establish connection or post error
+            try
+            {
+                using (var sshclient = new SshClient(IP, User, Pass))
+                {
+                    //Connect to ssh client/update pb/update usernotif/execute command.
 
+                    pbUser.Value = 30;
 
-            Console.WriteLine(apiresult);
+                    sshclient.Connect();
 
+                    pbUser.Value = 60;
 
+                    lblConnectState.Text = "Connected";
+                    Console.WriteLine("Connected to " + IP);
 
+                    pbUser.Value = 90;
+                    var cmd1 = sshclient.RunCommand(cmd);
+                    out1 = cmd1.Result;
+                    pbUser.Value = 100;
+                    txtUserNotif.Text = "Command Executed";
+                    gbControls.Enabled = true;
 
+                }
+            }
+            catch
+            {
+                //unable to connect procedure
+                pbUser.Value = 50;
+                Console.WriteLine("Connection ERROR 2");
+                lblConnectState.Text = "Not Connected";
+                pbUser.Value = 100;
+                pbUser.Value = 0;
+                gbControls.Enabled = false;
+                txtUserNotif.Text = "Connection Error" + IP;
 
-            string strapi = "test";
+            }
+            //return command output for parsing/data updating
+            return (out1);
+        }
 
+        private void btnCmdSend_Click(object sender, EventArgs e)
+        {
+            string IP = txtIP.Text;
+            string User = txtUser.Text;
+            string Pass = txtPass.Text;
+            string cmd = "rotctl -m 204 -r /dev/ttyACM0 -s9600 w " + txtSendCmd.Text;
+            string SendCmdResponse = Connect(IP, User, Pass, cmd);
 
-
-            return (strapi);
-
+            if (SendCmdResponse == "")
+            {
+                txtUserNotif.Text = "Command not recognized...";
+            }
+            else
+            {
+                txtUserNotif.Text = SendCmdResponse;
+                lstLog.Items.Add(SendCmdResponse);
+            }
         }
     }
 }

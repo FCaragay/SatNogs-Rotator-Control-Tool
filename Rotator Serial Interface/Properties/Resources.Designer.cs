@@ -69,15 +69,5 @@ namespace SatNogs_Rotator_Control_Tool.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Untitled_3 {
-            get {
-                object obj = ResourceManager.GetObject("Untitled-3", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
     }
 }
