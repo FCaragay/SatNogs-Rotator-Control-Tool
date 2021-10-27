@@ -1,5 +1,5 @@
 ﻿
-namespace Rotator_Serial_Interface
+namespace SatNogsRotatorControlTool
 {
     partial class frmMain
     {
@@ -43,7 +43,9 @@ namespace Rotator_Serial_Interface
             this.gbSSH = new System.Windows.Forms.GroupBox();
             this.btnDisconnect = new System.Windows.Forms.Button();
             this.gbControls = new System.Windows.Forms.GroupBox();
+            this.btnCmdSend = new System.Windows.Forms.Button();
             this.btnSTOP = new System.Windows.Forms.Button();
+            this.txtSendCmd = new System.Windows.Forms.TextBox();
             this.gbCommand = new System.Windows.Forms.GroupBox();
             this.btnControlMode = new System.Windows.Forms.Button();
             this.btnRotatorStatus = new System.Windows.Forms.Button();
@@ -57,7 +59,7 @@ namespace Rotator_Serial_Interface
             this.lblAZCurrentPos = new System.Windows.Forms.Label();
             this.txtELposition = new System.Windows.Forms.TextBox();
             this.txtAZposition = new System.Windows.Forms.TextBox();
-            this.btnAZELConf = new System.Windows.Forms.Button();
+            this.btnSetPos = new System.Windows.Forms.Button();
             this.lblELtrk = new System.Windows.Forms.Label();
             this.lblAZtrk = new System.Windows.Forms.Label();
             this.trkEL = new System.Windows.Forms.TrackBar();
@@ -66,8 +68,6 @@ namespace Rotator_Serial_Interface
             this.txtUserNotif = new System.Windows.Forms.TextBox();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.tooltipESTOP = new System.Windows.Forms.ToolTip(this.components);
-            this.btnCmdSend = new System.Windows.Forms.Button();
-            this.txtSendCmd = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.gbSSH.SuspendLayout();
             this.gbControls.SuspendLayout();
@@ -197,7 +197,7 @@ namespace Rotator_Serial_Interface
             this.gbControls.Controls.Add(this.lblAZCurrentPos);
             this.gbControls.Controls.Add(this.txtELposition);
             this.gbControls.Controls.Add(this.txtAZposition);
-            this.gbControls.Controls.Add(this.btnAZELConf);
+            this.gbControls.Controls.Add(this.btnSetPos);
             this.gbControls.Controls.Add(this.lblELtrk);
             this.gbControls.Controls.Add(this.lblAZtrk);
             this.gbControls.Controls.Add(this.trkEL);
@@ -209,6 +209,16 @@ namespace Rotator_Serial_Interface
             this.gbControls.TabIndex = 10;
             this.gbControls.TabStop = false;
             this.gbControls.Text = "Controls";
+            // 
+            // btnCmdSend
+            // 
+            this.btnCmdSend.Location = new System.Drawing.Point(405, 260);
+            this.btnCmdSend.Name = "btnCmdSend";
+            this.btnCmdSend.Size = new System.Drawing.Size(92, 23);
+            this.btnCmdSend.TabIndex = 15;
+            this.btnCmdSend.Text = "Send Command";
+            this.btnCmdSend.UseVisualStyleBackColor = true;
+            this.btnCmdSend.Click += new System.EventHandler(this.btnCmdSend_Click);
             // 
             // btnSTOP
             // 
@@ -222,6 +232,13 @@ namespace Rotator_Serial_Interface
             this.btnSTOP.UseVisualStyleBackColor = true;
             this.btnSTOP.Click += new System.EventHandler(this.btnSTOP_Click);
             this.btnSTOP.MouseHover += new System.EventHandler(this.btnSTOP_MouseHover);
+            // 
+            // txtSendCmd
+            // 
+            this.txtSendCmd.Location = new System.Drawing.Point(6, 263);
+            this.txtSendCmd.Name = "txtSendCmd";
+            this.txtSendCmd.Size = new System.Drawing.Size(393, 20);
+            this.txtSendCmd.TabIndex = 16;
             // 
             // gbCommand
             // 
@@ -348,15 +365,15 @@ namespace Rotator_Serial_Interface
             this.txtAZposition.TabIndex = 5;
             this.txtAZposition.TabStop = false;
             // 
-            // btnAZELConf
+            // btnSetPos
             // 
-            this.btnAZELConf.Location = new System.Drawing.Point(6, 109);
-            this.btnAZELConf.Name = "btnAZELConf";
-            this.btnAZELConf.Size = new System.Drawing.Size(75, 23);
-            this.btnAZELConf.TabIndex = 5;
-            this.btnAZELConf.Text = "Set Position";
-            this.btnAZELConf.UseVisualStyleBackColor = true;
-            this.btnAZELConf.Click += new System.EventHandler(this.btnAZELConf_Click);
+            this.btnSetPos.Location = new System.Drawing.Point(6, 109);
+            this.btnSetPos.Name = "btnSetPos";
+            this.btnSetPos.Size = new System.Drawing.Size(75, 23);
+            this.btnSetPos.TabIndex = 5;
+            this.btnSetPos.Text = "Set Position";
+            this.btnSetPos.UseVisualStyleBackColor = true;
+            this.btnSetPos.Click += new System.EventHandler(this.btnAZELConf_Click);
             // 
             // lblELtrk
             // 
@@ -412,23 +429,6 @@ namespace Rotator_Serial_Interface
             // 
             this.notifyIcon1.Text = "notifyIcon1";
             this.notifyIcon1.Visible = true;
-            // 
-            // btnCmdSend
-            // 
-            this.btnCmdSend.Location = new System.Drawing.Point(405, 260);
-            this.btnCmdSend.Name = "btnCmdSend";
-            this.btnCmdSend.Size = new System.Drawing.Size(92, 23);
-            this.btnCmdSend.TabIndex = 15;
-            this.btnCmdSend.Text = "Send Command";
-            this.btnCmdSend.UseVisualStyleBackColor = true;
-            this.btnCmdSend.Click += new System.EventHandler(this.btnCmdSend_Click);
-            // 
-            // txtSendCmd
-            // 
-            this.txtSendCmd.Location = new System.Drawing.Point(6, 263);
-            this.txtSendCmd.Name = "txtSendCmd";
-            this.txtSendCmd.Size = new System.Drawing.Size(393, 20);
-            this.txtSendCmd.TabIndex = 16;
             // 
             // pictureBox1
             // 
@@ -487,7 +487,7 @@ namespace Rotator_Serial_Interface
         private System.Windows.Forms.Label lblAZCurrentPos;
         private System.Windows.Forms.TextBox txtELposition;
         private System.Windows.Forms.TextBox txtAZposition;
-        private System.Windows.Forms.Button btnAZELConf;
+        private System.Windows.Forms.Button btnSetPos;
         private System.Windows.Forms.Label lblELtrk;
         private System.Windows.Forms.Label lblAZtrk;
         private System.Windows.Forms.TrackBar trkEL;

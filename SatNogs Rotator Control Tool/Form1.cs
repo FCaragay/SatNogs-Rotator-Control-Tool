@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Net.Http;
 
-namespace Rotator_Serial_Interface
+namespace SatNogsRotatorControlTool
 {
     public partial class frmMain : Form
     {

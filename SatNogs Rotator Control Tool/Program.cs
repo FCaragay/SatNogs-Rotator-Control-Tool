@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Rotator_Serial_Interface
+namespace SatNogsRotatorControlTool
 {
     static class Program
     {
