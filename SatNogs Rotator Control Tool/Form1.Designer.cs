@@ -422,6 +422,7 @@ namespace SatNogsRotatorControlTool
             // 
             this.txtUserNotif.Location = new System.Drawing.Point(237, 324);
             this.txtUserNotif.Name = "txtUserNotif";
+            this.txtUserNotif.ReadOnly = true;
             this.txtUserNotif.Size = new System.Drawing.Size(508, 20);
             this.txtUserNotif.TabIndex = 13;
             // 
